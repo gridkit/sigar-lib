@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>org.gridkit.lab</groupId>
+        <artifactId>grid-lab-parent</artifactId>
+        <version>0.10</version>        
+    </parent>
+
+    <artifactId>sigar-lib</artifactId>
+    <version>0.1-SNAPSHOT</version>
+    <name>${project.groupId}::${project.artifactId}</name>
+
+    <properties>
+        <sigar.version>1.6.4</sigar.version>
+    </properties>
+
+    <scm>
+        <connection>scm:svn:http://gridkit.googlecode.com/svn/grid-lab/trunk/sigar-lib</connection>
+        <developerConnection>scm:svn:https://gridkit.googlecode.com/svn/grid-lab/trunk/sigar-lib</developerConnection>
+        <url>http://gridkit.googlecode.com/svn/grid-lab/trunk/sigar-lib</url>
+    </scm>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.fusesource</groupId>
+            <artifactId>sigar</artifactId>
+            <version>${sigar.version}</version>
+            <exclusions>
+              <exclusion>
+                  <groupId>log4j</groupId>
+                  <artifactId>log4j</artifactId>
+              </exclusion>
+            </exclusions>
+        </dependency>
+    </dependencies>
+
+    <repositories>
+        <!-- GridKit maven2 repository -->
+        <!-- required to fetch parent POM -->
+        <repository>
+            <id>gridkit-releases</id>
+            <name>gridkit-repo.googlecode.com</name>
+            <url>http://gridkit.googlecode.com/svn/repo/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-release-plugin</artifactId>
+                <configuration>
+                    <autoVersionSubmodules>true</autoVersionSubmodules>
+                    <remoteTagging>false</remoteTagging>
+                    <suppressCommitBeforeTag>true</suppressCommitBeforeTag>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>
