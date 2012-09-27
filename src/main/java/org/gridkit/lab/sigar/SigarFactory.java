@@ -97,10 +97,11 @@ public class SigarFactory {
                 }
         
                 fos.close();
+                
+                zis.closeEntry();
                 ze = zis.getNextEntry();
             }
-        
-           zis.closeEntry();
+
            zis.close();
         }
         
