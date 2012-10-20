@@ -14,20 +14,29 @@ import java.util.zip.ZipInputStream;
 
 import org.hyperic.sigar.Sigar;
 import org.hyperic.sigar.SigarLoader;
+import org.hyperic.sigar.SigarLog;
+import org.slf4j.LoggerFactory;
 
-// TODO handle concurrent extraction within multiple class loaders
+// TODO handle concurrent extraction
 public class SigarFactory {
-    private static String SIGAR_LIB_ZIP = "sigar-lib.zip";
+    private static final String SIGAR_LIB_ZIP = "sigar-lib.zip";
         
-    private static String JAVA_IO_TMPDIR = System.getProperty("java.io.tmpdir");
+    private static final String JAVA_IO_TMPDIR = System.getProperty("java.io.tmpdir");
         
-    private static File SIGAR_LIB_TMP_DIR = new File(JAVA_IO_TMPDIR + File.separator + "sigar-lib");
+    private static final File SIGAR_LIB_TMP_DIR = new File(JAVA_IO_TMPDIR + File.separator + "sigar-lib");
 
-    private static int COPY_BUFFER_SIZE = 1024 * 4;
+    private static final int COPY_BUFFER_SIZE = 1024 * 4;
+    
+    private static final String SIGAR_LOG_NAME = "Sigar";
     
     static {
         try {
-            newSigar().getPid();
+            Object level = disableSigarLogger();
+            try {
+                newSigar().getPid();
+            } finally {
+                enableSigarLogger(level);
+            }
         } catch (UnsatisfiedLinkError ule) {
             try {
                 Class.forName(SigarInitializer.class.getName());
@@ -39,6 +48,68 @@ public class SigarFactory {
     
     public static Sigar newSigar() {
         return new Sigar();
+    }
+
+    private static Object disableSigarLogger() {
+        try {
+            return disableSigarLoggerLog4j();
+        } catch (Error e1) {
+            try {
+                return disableSigarLoggerLogback();
+            } catch (Error e2) {
+                return null;
+            }
+        }
+    }
+    
+    private static void enableSigarLogger(Object level) {
+        if (level != null) {
+            try {
+                enableSigarLoggerLog4j(level);
+            } catch (Error e1) {
+                try {
+                    enableSigarLoggerLogback(level);
+                } catch (Error e2) {
+                    
+                }
+            }
+        }
+    }
+    
+    private static Object disableSigarLoggerLog4j() {
+        org.apache.log4j.Logger sigarLogger = SigarLog.getLogger(SIGAR_LOG_NAME);
+        
+        org.apache.log4j.Level level = sigarLogger.getLevel();
+        
+        sigarLogger.setLevel(org.apache.log4j.Level.OFF);
+        
+        return level;
+    }
+    
+    private static Object disableSigarLoggerLogback() {
+        ch.qos.logback.classic.Logger sigarLogger = (ch.qos.logback.classic.Logger)LoggerFactory.getLogger(SIGAR_LOG_NAME);
+        
+        ch.qos.logback.classic.Level level = sigarLogger.getLevel();
+        
+        sigarLogger.setLevel(ch.qos.logback.classic.Level.OFF);
+        
+        return level;
+    }
+    
+    private static void enableSigarLoggerLog4j(Object rawLevel) {
+        if (rawLevel instanceof org.apache.log4j.Level) {
+            org.apache.log4j.Logger sigarLogger = SigarLog.getLogger(SIGAR_LOG_NAME);
+            
+            sigarLogger.setLevel((org.apache.log4j.Level)rawLevel);
+        }
+    }
+    
+    private static void enableSigarLoggerLogback(Object rawLevel) {
+        if (rawLevel instanceof ch.qos.logback.classic.Level) {
+            ch.qos.logback.classic.Logger sigarLogger = (ch.qos.logback.classic.Logger)LoggerFactory.getLogger(SIGAR_LOG_NAME);
+                    
+            sigarLogger.setLevel((ch.qos.logback.classic.Level)rawLevel);
+        }
     }
     
     private static class SigarInitializer {
@@ -102,7 +173,7 @@ public class SigarFactory {
                 ze = zis.getNextEntry();
             }
 
-           zis.close();
+            zis.close();
         }
         
         
