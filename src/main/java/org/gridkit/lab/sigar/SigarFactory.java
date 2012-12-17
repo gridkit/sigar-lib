@@ -15,6 +15,7 @@ import java.util.zip.ZipInputStream;
 import org.hyperic.sigar.Sigar;
 import org.hyperic.sigar.SigarLoader;
 import org.hyperic.sigar.SigarLog;
+import org.hyperic.sigar.SigarProxy;
 import org.slf4j.LoggerFactory;
 
 // TODO handle concurrent extraction
@@ -46,7 +47,7 @@ public class SigarFactory {
         }
     }
     
-    public static Sigar newSigar() {
+    public static SigarProxy newSigar() {
         return new Sigar();
     }
 
