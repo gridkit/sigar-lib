@@ -11,7 +11,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 
-public class LibraryExtractor {
+class LibraryExtractor {
     private static final int BUFFER_LENGTH = 1024 * 4; // 4KB
     
     private final File libDir;
@@ -62,6 +62,10 @@ public class LibraryExtractor {
     
     public String getLibPath() {
         return libDir.getAbsolutePath();
+    }
+    
+    public String getFilePath(String libFileName) {
+        return new File(libDir, libFileName).getAbsolutePath();
     }
     
     private static byte[] hash(URL url) throws IOException {
@@ -142,3 +146,4 @@ public class LibraryExtractor {
         }
     }
 }
+
