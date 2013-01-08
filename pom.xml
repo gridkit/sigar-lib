@@ -9,7 +9,7 @@
     </parent>
 
     <artifactId>sigar-lib</artifactId>
-    <version>0.2</version>
+    <version>0.3-SNAPSHOT</version>
     <name>${project.groupId}::${project.artifactId}</name>
 
     <properties>
@@ -18,9 +18,9 @@
     </properties>
 
     <scm>
-        <connection>scm:svn:http://gridkit.googlecode.com/svn/grid-lab/tags/sigar-lib-0.2</connection>
-        <developerConnection>scm:svn:https://gridkit.googlecode.com/svn/grid-lab/tags/sigar-lib-0.2</developerConnection>
-        <url>http://gridkit.googlecode.com/svn/grid-lab/tags/sigar-lib-0.2</url>
+        <connection>scm:svn:http://gridkit.googlecode.com/svn/grid-lab/trunk/sigar-lib</connection>
+        <developerConnection>scm:svn:https://gridkit.googlecode.com/svn/grid-lab/trunk/sigar-lib</developerConnection>
+        <url>http://gridkit.googlecode.com/svn/grid-lab/trunk/sigar-lib</url>
     </scm>
 
     <dependencies>
