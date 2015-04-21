@@ -10,7 +10,7 @@
 
     <groupId>org.gridkit.lab</groupId>
     <artifactId>sigar-lib</artifactId>
-    <version>1.6.4-SNAPSHOT</version> <!-- Match sigar library version -->
+    <version>1.6.4</version> <!-- Match sigar library version -->
     <name>${project.groupId}::${project.artifactId}</name>
     <description>Self extracting packaging for sigar binaries</description>
 
@@ -33,7 +33,7 @@
     <connection>scm:git:https://github.com/gridkit/sigar-lib.git</connection>
     <developerConnection>scm:git:https://github.com/gridkit/sigar-lib.git</developerConnection>
     <url>https://github.com/gridkit/sigar-lib</url>
-    <tag>HEAD</tag>
+    <tag>sigar-lib-1.6.4</tag>
   </scm>
  
    <properties>
