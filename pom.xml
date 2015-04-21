@@ -2,26 +2,44 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <parent>
-        <groupId>org.gridkit.lab</groupId>
-        <artifactId>grid-lab-parent</artifactId>
-        <version>0.10</version>        
-    </parent>
+  <parent>
+    <groupId>org.gridkit.lab</groupId>
+    <artifactId>grid-lab-pom</artifactId>
+    <version>2</version>
+  </parent>
 
+    <groupId>org.gridkit.lab</groupId>
     <artifactId>sigar-lib</artifactId>
-    <version>0.3-SNAPSHOT</version>
+    <version>1.6.4-SNAPSHOT</version> <!-- Match sigar library version -->
     <name>${project.groupId}::${project.artifactId}</name>
+    <description>Self extracting packaging for sigar binaries</description>
 
-    <properties>
+  <licenses>
+    <license>
+      <name>The Apache Software License, Version 2.0</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+
+  <developers>
+    <developer>
+      <id>apanasyuk</id>
+      <name>Artem Panasyuk</name>
+    </developer>
+  </developers>
+
+  <scm>
+    <connection>scm:git:https://github.com/gridkit/sigar-lib.git</connection>
+    <developerConnection>scm:git:https://github.com/gridkit/sigar-lib.git</developerConnection>
+    <url>https://github.com/gridkit/sigar-lib</url>
+    <tag>HEAD</tag>
+  </scm>
+ 
+   <properties>
         <sigar.version>1.6.4</sigar.version>
         <junit.version>4.10</junit.version>
     </properties>
-
-    <scm>
-        <connection>scm:svn:http://gridkit.googlecode.com/svn/grid-lab/trunk/sigar-lib</connection>
-        <developerConnection>scm:svn:https://gridkit.googlecode.com/svn/grid-lab/trunk/sigar-lib</developerConnection>
-        <url>http://gridkit.googlecode.com/svn/grid-lab/trunk/sigar-lib</url>
-    </scm>
 
     <dependencies>
         <dependency>
@@ -44,34 +62,27 @@
         </dependency>
     </dependencies>
 
-    <repositories>
-        <!-- GridKit maven2 repository -->
-        <!-- required to fetch parent POM -->
-        <repository>
-            <id>gridkit-releases</id>
-            <name>gridkit-repo.googlecode.com</name>
-            <url>http://gridkit.googlecode.com/svn/repo/</url>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-        </repository>
-    </repositories>
-
     <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-release-plugin</artifactId>
-                <configuration>
-                    <autoVersionSubmodules>true</autoVersionSubmodules>
-                    <remoteTagging>false</remoteTagging>
-                    <suppressCommitBeforeTag>true</suppressCommitBeforeTag>
-                </configuration>
-            </plugin>
-        </plugins>
+      <plugins>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <version>3.0</version>
+          <configuration>
+            <source>1.6</source>
+            <target>1.6</target>
+          </configuration>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-release-plugin</artifactId>
+          <version>2.4</version>
+          <configuration>
+            <autoVersionSubmodules>true</autoVersionSubmodules>
+            <pushChanges>true</pushChanges>
+          </configuration>
+        </plugin>
+      </plugins>
     </build>
 </project>
 
